@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:libs="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/background">
+
+    <com.gigamole.cutintolayout.lib.CutIntoLayout
+        android:id="@+id/cut_into_layout"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle">
+
+        <com.gigamole.cutintolayout.BernierTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-10dp"
+            android:gravity="center"
+            android:text="@string/cut_into_layout_title"
+            android:textColor="@color/white"
+            android:textSize="40sp" />
+
+    </com.gigamole.cutintolayout.lib.CutIntoLayout>
+
+</FrameLayout>

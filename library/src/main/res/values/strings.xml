@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CutIntoLayout</string>
+    <string name="child_exception">CutIntoLayout must have child. Only one child.</string>
+</resources>
