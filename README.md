@@ -1,3 +1,5 @@
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-CutIntoLayout-blue.svg?style=flat-square)](http://android-arsenal.com/details/1/3316)
+
 CutIntoLayout
 ===================
 CutIntoLayout allows you to create clear effect on your background.
