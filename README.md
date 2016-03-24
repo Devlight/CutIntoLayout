@@ -14,29 +14,33 @@ Download
 You can download a .jar from GitHub's [releases page](https://github.com/GIGAMOLE/CutIntoLayout/releases).
 
 Or use Gradle jCenter:
-
-    dependencies {
-        repositories {
-            mavenCentral()
-            maven {
-                url  'http://dl.bintray.com/gigamole/maven/'
-            }
+```groovy
+dependencies {
+    repositories {
+        mavenCentral()
+        maven {
+            url  'http://dl.bintray.com/gigamole/maven/'
         }
-        compile 'com.github.gigamole.cutintolayout:library:+'
     }
+    compile 'com.github.gigamole.cutintolayout:library:+'
+}
+```
 
 Or Gradle Maven Central:
 
-    compile 'com.github.gigamole.cutintolayout:library:1.0.1'
+```groovy
+compile 'com.github.gigamole.cutintolayout:library:1.0.1'
+```
 
 Or Maven:
-
-    <dependency>
-	    <groupId>com.github.gigamole.cutintolayout</groupId>
-	    <artifactId>library</artifactId>
-	    <version>1.0.1</version>
-	    <type>aar</type>
-    </dependency>
+```xml
+<dependency>
+    <groupId>com.github.gigamole.cutintolayout</groupId>
+    <artifactId>library</artifactId>
+    <version>1.0.1</version>
+    <type>aar</type>
+</dependency>
+```
 
 Android SDK Version
 =========
@@ -48,23 +52,24 @@ CutIntoLayout must have child. Only one child.
 You can put any view into layout.
 
 XML init:
+```xml
+<com.gigamole.cutintolayout.lib.CutIntoLayout
+    android:id="@+id/cut_into_layout"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    android:background="@drawable/sample_bg">
 
-    <com.gigamole.cutintolayout.lib.CutIntoLayout
-        android:id="@+id/cut_into_layout"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/sample_bg">
+        android:gravity="center"
+        android:text="@string/sample_title"
+        android:textColor="@color/white" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/sample_title"
-            android:textColor="@color/white" />
-
-    </com.gigamole.cutintolayout.lib.CutIntoLayout>
+</com.gigamole.cutintolayout.lib.CutIntoLayout>
+```
 
 Getting Help
 ======
