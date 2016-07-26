@@ -40,7 +40,6 @@ public class CutIntoLayout extends FrameLayout {
     private Canvas canvas;
     private Bitmap bitmap;
 
-    private View child;
     private Bitmap childBitmap;
 
     private int left;
@@ -113,17 +112,17 @@ public class CutIntoLayout extends FrameLayout {
     }
 
     private void getChildBitmap() {
-        this.child = getChildAt(0);
+        final View child = getChildAt(0);
 
-        this.left = this.child.getLeft();
-        this.top = this.child.getTop();
+        this.left = child.getLeft();
+        this.top = child.getTop();
 
-        this.child.setDrawingCacheEnabled(true);
-        this.child.buildDrawingCache();
-        this.childBitmap = Bitmap.createBitmap(this.child.getDrawingCache());
-        this.child.setDrawingCacheEnabled(false);
+        child.setDrawingCacheEnabled(true);
+        child.buildDrawingCache();
+        this.childBitmap = Bitmap.createBitmap(child.getDrawingCache());
+        child.setDrawingCacheEnabled(false);
 
-        this.child.setVisibility(GONE);
+        child.setVisibility(GONE);
 
         this.isChildGet = true;
     }

@@ -26,8 +26,6 @@ import com.gigamole.cutintolayout.lib.CutIntoLayout;
 
 public class MainActivity extends Activity {
 
-    private CutIntoLayout cutIntoLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +39,7 @@ public class MainActivity extends Activity {
         slideAnimation.setRepeatCount(Animation.INFINITE);
         slideAnimation.setRepeatMode(Animation.REVERSE);
 
-        cutIntoLayout = (CutIntoLayout) findViewById(R.id.cut_into_layout);
+        final CutIntoLayout cutIntoLayout = (CutIntoLayout) findViewById(R.id.cut_into_layout);
         cutIntoLayout.startAnimation(slideAnimation);
     }
 }
