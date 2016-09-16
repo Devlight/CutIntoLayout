@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gigamole.cutintolayout.lib">
+    package="devlight.io.library">
 
     <!--
     Copyright (C) 2015 Basil Miller

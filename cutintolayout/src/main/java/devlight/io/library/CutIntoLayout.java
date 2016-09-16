@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gigamole.cutintolayout.lib;
+package devlight.io.library;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

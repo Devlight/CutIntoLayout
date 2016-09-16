@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gigamole.cutintolayout;
+package devlight.io.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 
-import com.gigamole.cutintolayout.lib.CutIntoLayout;
+import devlight.io.library.CutIntoLayout;
 
 public class MainActivity extends Activity {
 

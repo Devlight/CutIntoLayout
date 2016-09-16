@@ -3,7 +3,7 @@ apply plugin: "com.jfrog.bintray"
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'maven'
 
-version = "1.0.1"
+version = "1.0.2"
 
 
 android {
@@ -14,7 +14,7 @@ android {
         minSdkVersion 11
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.2"
     }
     buildTypes {
         release {
@@ -31,7 +31,7 @@ dependencies {
 
 def siteUrl = 'https://github.com/GIGAMOLE/CutIntoLayout'
 def gitUrl = 'https://github.com/GIGAMOLE/CutIntoLayout.git'
-group = "com.github.gigamole.cutintolayout"
+group = "devlight.io"
 
 install {
     repositories.mavenInstaller {
@@ -71,23 +71,34 @@ install {
 }
 
 task sourcesJar(type: Jar) {
+    //noinspection GroovyAssignabilityCheck
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
 
 task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
+    //noinspection GroovyAssignabilityCheck
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+afterEvaluate {
+    javadoc.classpath += files(android.libraryVariants.collect { variant ->
+        variant.javaCompile.classpath.files
+    })
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
+    //noinspection GrUnresolvedAccess
     from javadoc.destinationDir
 }
+
 artifacts {
     archives javadocJar
     archives sourcesJar
 }
+
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())

@@ -11,11 +11,11 @@ CutIntoLayout
 
 CutIntoLayout allows you to create clear effect on your background.
 
-[![Android Arsenal](https://drive.google.com/uc?export=download&id=0BxPO_UeS7wScTm9HT0JzcmpHOVE)](http://android-arsenal.com/details/1/3316)
+[![Android Arsenal](https://drive.google.com/uc?export=download&id=0BxPO_UeS7wScekxiT3M5aFlELXc)](http://android-arsenal.com/details/1/3316)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![Android](https://drive.google.com/uc?export=download&id=0BxPO_UeS7wSccEZaclNGN0R5OWc)](https://github.com/DevLight-Mobile-Agency)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![Download](https://drive.google.com/uc?export=download&id=0BxPO_UeS7wScaDl2U0QtWUx3emM)](https://bintray.com/gigamole/maven/cutintolayout/_latestVersion)
+[![Download](https://drive.google.com/uc?export=download&id=0BxPO_UeS7wScVGZQUVlrM21Belk)](https://bintray.com/gigamole/maven/cutintolayout/_latestVersion)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![License](https://drive.google.com/uc?export=download&id=0BxPO_UeS7wScU0tmeFpGMHVWNWs)](https://github.com/DevLight-Mobile-Agency/CutIntoLayout/blob/master/LICENSE.txt)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -30,11 +30,11 @@ CutIntoLayout allows you to create clear effect on your background.
 You can check the sample app [here](https://github.com/DevLight-Mobile-Agency/CutIntoLayout/tree/master/app).
 
 Download
-------------
+========
 
-You can download a `.jar` from GitHub's [releases page](https://github.com/DevLight-Mobile-Agency/CutIntoLayout/releases).
+You can download a `.aar` from GitHub's [releases page](https://github.com/DevLight-Mobile-Agency/CutIntoLayout/releases).
 
-Or use Gradle jCenter:
+Or use Gradle jCenter:  
 ```groovy
 dependencies {
     repositories {
@@ -47,14 +47,12 @@ dependencies {
 }
 ```
 
-Or Gradle Maven Central:
-
+Or Gradle Maven Central:  
 ```groovy
 compile 'com.github.gigamole.cutintolayout:library:1.0.1'
 ```
 
-Or Maven:
-
+Or Maven:  
 ```xml
 <dependency>
     <groupId>com.github.gigamole.cutintolayout</groupId>

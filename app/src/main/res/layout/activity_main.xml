@@ -23,7 +23,7 @@
 
     </LinearLayout>
 
-    <com.gigamole.cutintolayout.lib.CutIntoLayout
+    <devlight.io.library.CutIntoLayout
         android:id="@+id/cut_into_layout"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -37,6 +37,6 @@
             android:padding="20dp"
             android:src="@drawable/ic_logo"/>
 
-    </com.gigamole.cutintolayout.lib.CutIntoLayout>
+    </devlight.io.library.CutIntoLayout>
 
 </FrameLayout>
