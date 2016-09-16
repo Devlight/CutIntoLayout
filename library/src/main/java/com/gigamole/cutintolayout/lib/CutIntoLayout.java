@@ -16,15 +16,17 @@
 
 package com.gigamole.cutintolayout.lib;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -32,32 +34,32 @@ import android.widget.FrameLayout;
 /**
  * Created by GIGAMOLE on 21.06.2015.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class CutIntoLayout extends FrameLayout {
 
-    private int width;
-    private int height;
+    // Paint flags
+    private final static int FLAGS =
+            Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.FILTER_BITMAP_FLAG;
 
-    private Canvas canvas;
-    private Bitmap bitmap;
-
-    private Bitmap childBitmap;
-
-    private int left;
-    private int top;
-
-    private boolean isChildGet;
-    private boolean isGet;
-
-    private final Matrix matrix = new Matrix();
-    private final PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.XOR);
-
-    private Paint cutIntoPaint = new Paint(Paint.ANTI_ALIAS_FLAG) {
+    // View bounds
+    private final RectF mBounds = new RectF();
+    // Cut into paint
+    private final Paint mPaint = new Paint(FLAGS) {
         {
-            setDither(true);
-            setAntiAlias(true);
-            setXfermode(porterDuffXfermode);
+            setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
         }
     };
+
+    // Child screenshot
+    private Bitmap mChildBitmap;
+    // Child coordinate
+    private int mChildLeft;
+    private int mChildTop;
+
+    // Masks
+    private Canvas mMaskCanvas = new Canvas();
+    private Bitmap mMaskBitmap;
+    private Drawable mMask;
 
     public CutIntoLayout(Context context) {
         this(context, null);
@@ -70,73 +72,96 @@ public class CutIntoLayout extends FrameLayout {
     public CutIntoLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         setWillNotDraw(false);
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        ViewCompat.setLayerType(this, ViewCompat.LAYER_TYPE_SOFTWARE, null);
+
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CutIntoLayout);
+        try {
+            setMask(typedArray.getDrawable(R.styleable.CutIntoLayout_cil_mask));
+        } finally {
+            typedArray.recycle();
+        }
     }
 
+    public Drawable getMask() {
+        return mMask;
+    }
+
+    public void setMask(final Drawable mask) {
+        mMask = mask;
+        requestLayout();
+    }
+
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        this.width = MeasureSpec.getSize(widthMeasureSpec);
-        this.height = MeasureSpec.getSize(heightMeasureSpec);
-
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mBounds.set(0.0F, 0.0F, getMeasuredWidth(), getMeasuredHeight());
+
+        mMaskBitmap = Bitmap.createBitmap(
+                (int) mBounds.width(), (int) mBounds.height(), Bitmap.Config.ARGB_8888
+        );
+        mMaskCanvas.setBitmap(mMaskBitmap);
+
+        // Set mask bounds relative to view bounds
+        mMask.setBounds(0, 0, (int) mBounds.width(), (int) mBounds.height());
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.drawColor(0, PorterDuff.Mode.CLEAR);
+    protected void onDraw(final Canvas canvas) {
+        super.onDraw(canvas);
 
-        if (this.isGet && this.isChildGet) {
-            this.canvas.drawBitmap(this.childBitmap, this.left, this.top, this.cutIntoPaint);
-            canvas.drawBitmap(this.bitmap, this.matrix, null);
-        }
+        // Check for availability
+        if (mMask == null || mChildBitmap == null) return;
+
+        // Clear
+        mMaskCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        // Draw background mask
+        mMask.draw(mMaskCanvas);
+        // Cut into view
+        mMaskCanvas.drawBitmap(mChildBitmap, mChildLeft, mChildTop, mPaint);
+
+        canvas.drawBitmap(mMaskBitmap, 0.0F, 0.0F, null);
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if (getChildCount() == 1) {
-            getChildBitmap();
-            getBitmap();
-        } else {
+        if (getChildCount() > 1)
             throw new IllegalArgumentException(getResources().getString(R.string.child_exception));
-        }
-    }
 
-    private void getBitmap() {
-        this.bitmap = drawableToBitmap(getBackground());
-        this.canvas = new Canvas(this.bitmap);
-
-        this.isGet = true;
-    }
-
-    private void getChildBitmap() {
         final View child = getChildAt(0);
 
-        this.left = child.getLeft();
-        this.top = child.getTop();
-
+        child.setVisibility(VISIBLE);
         child.setDrawingCacheEnabled(true);
         child.buildDrawingCache();
-        this.childBitmap = Bitmap.createBitmap(child.getDrawingCache());
+
+        final Bitmap drawingCache = child.getDrawingCache();
+        if (drawingCache == null) return;
+
+        // Obtain child screenshot
+        mChildBitmap = Bitmap.createBitmap(drawingCache);
+        drawingCache.recycle();
+
+        // Obtain child offset
+        mChildLeft = child.getLeft();
+        mChildTop = child.getTop();
+
         child.setDrawingCacheEnabled(false);
-
         child.setVisibility(GONE);
-
-        this.isChildGet = true;
     }
 
-    private Bitmap drawableToBitmap(final Drawable drawable) {
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable) drawable).getBitmap();
-        }
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mChildBitmap.recycle();
+        mChildBitmap = null;
 
-        final Bitmap bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888);
-        final Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
+        mMaskCanvas.setBitmap(null);
+        mMaskBitmap.recycle();
+        mMaskBitmap = null;
     }
 }
