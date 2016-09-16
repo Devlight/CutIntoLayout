@@ -34,31 +34,25 @@ Download
 
 You can download a `.aar` from GitHub's [releases page](https://github.com/DevLight-Mobile-Agency/CutIntoLayout/releases).
 
-Or use Gradle jCenter:  
+Or Gradle:  
 ```groovy
-dependencies {
-    repositories {
-        mavenCentral()
-        maven {
-            url  'http://dl.bintray.com/gigamole/maven/'
-        }
-    }
-    compile 'com.github.gigamole.cutintolayout:library:+'
-}
-```
-
-Or Gradle Maven Central:  
-```groovy
-compile 'com.github.gigamole.cutintolayout:library:1.0.1'
+compile 'devlight.io:cutintolayout:1.0.2'
 ```
 
 Or Maven:  
 ```xml
 <dependency>
-    <groupId>com.github.gigamole.cutintolayout</groupId>
-    <artifactId>library</artifactId>
-    <version>1.0.1</version>
-    <type>aar</type>
+  <groupId>devlight.io</groupId>
+  <artifactId>cutintolayout</artifactId>
+  <version>1.0.2</version>
+  <type>pom</type>
+</dependency>
+```
+
+Or Ivy:  
+```groovy
+<dependency org='devlight.io' name='cutintolayout' rev='1.0.2'>
+  <artifact name='$AID' ext='pom'></artifact>
 </dependency>
 ```
 
